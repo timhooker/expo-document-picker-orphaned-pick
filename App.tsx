@@ -2,10 +2,8 @@ import * as DocumentPicker from 'expo-document-picker'
 import { useState } from 'react'
 import { Button, Modal, ScrollView, StyleSheet, Text, View } from 'react-native'
 
-const DISMISS_AFTER_MS = 2500
-
 export default function App() {
-  const [modalVisible, setModalVisible] = useState(false)
+  const [sheetVisible, setSheetVisible] = useState(false)
   const [log, setLog] = useState<string[]>([])
 
   const append = (line: string) => setLog(lines => [...lines, line])
@@ -20,18 +18,15 @@ export default function App() {
     }
   }
 
-  const pickThenDismissPresenter = () => {
-    setTimeout(() => {
-      append('dismissing the modal under the picker')
-      setModalVisible(false)
-    }, DISMISS_AFTER_MS)
+  const closeSheetAndPick = () => {
+    setSheetVisible(false)
     pick('pick 1')
   }
 
   return (
     <View style={styles.screen}>
       <Text style={styles.heading}>expo-document-picker orphaned pick</Text>
-      <Button title="1. Open modal" onPress={() => setModalVisible(true)} />
+      <Button title="1. Open sheet" onPress={() => setSheetVisible(true)} />
       <Button title="3. Pick again" onPress={() => pick('pick 2')} />
       <ScrollView style={styles.log}>
         {log.map((line, index) => (
@@ -40,13 +35,10 @@ export default function App() {
           </Text>
         ))}
       </ScrollView>
-      <Modal visible={modalVisible} animationType="slide" presentationStyle="pageSheet">
+      <Modal visible={sheetVisible} animationType="slide" presentationStyle="pageSheet">
         <View style={styles.screen}>
-          <Text style={styles.heading}>Modal</Text>
-          <Button
-            title={`2. Pick, then dismiss this modal after ${DISMISS_AFTER_MS}ms`}
-            onPress={pickThenDismissPresenter}
-          />
+          <Text style={styles.heading}>Sheet</Text>
+          <Button title="2. Attach a file" onPress={closeSheetAndPick} />
         </View>
       </Modal>
     </View>
