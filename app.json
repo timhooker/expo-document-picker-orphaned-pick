@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "orphaned-pick",
+    "slug": "expo-document-picker-orphaned-pick",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "ios": { "bundleIdentifier": "dev.repro.orphanedpick" },
+    "android": { "package": "dev.repro.orphanedpick" }
+  }
+}
